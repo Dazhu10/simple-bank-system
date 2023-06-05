@@ -14,6 +14,8 @@ public class JDBCUtil {
         Connection conn = DriverManager.getConnection(url, username, password);
         return conn;
     }
+
+
     public static void setParameters(PreparedStatement pstmt, CardInfoEntity user) throws SQLException {
         pstmt.setString(1,user.getAccountNum());
         pstmt.setString(2,user.getPassword());

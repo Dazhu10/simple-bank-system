@@ -2,6 +2,7 @@ package dao.impl;
 
 import dao.AccountOperationMapper;
 import entity.CardInfoEntity;
+import util.CURDUtil;
 import util.JDBCUtil;
 
 import java.sql.*;
@@ -68,36 +69,42 @@ public class AccountOperationMapperImpl implements AccountOperationMapper {
         }else{
             sql = "update card_info set state = ? where account_num = ? and state = 1";
         }
-        PreparedStatement pstmt = null;
-        int res = 0;
-        try {
-            conn = JDBCUtil.getConnetion();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user.getState());
-            pstmt.setString(2, user.getAccountNum());
-            res = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("数据库操作失败！");
-            throw new RuntimeException(e);
-        }
+//        PreparedStatement pstmt = null;
+//        int res = 0;
+//        try {
+//            conn = JDBCUtil.getConnetion();
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, user.getState());
+//            pstmt.setString(2, user.getAccountNum());
+//            res = pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println("数据库操作失败！");
+//            throw new RuntimeException(e);
+//        }
+//        return res;
+        //以下是通过通用方法实现
+        int res = CURDUtil.WriteOne(sql, user.getState(), user.getAccountNum());
         return res;
     }
 
     @Override
     public int updatePassword(CardInfoEntity user) {
         String sql = "update card_info set password = ? where account_num = ? and state = 1";
-        PreparedStatement pstmt = null;
-        int res = 0;
-        try {
-            conn = JDBCUtil.getConnetion();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user.getPassword());
-            pstmt.setString(2, user.getAccountNum());
-            res = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("数据库操作失败！");
-            throw new RuntimeException(e);
-        }
+//        PreparedStatement pstmt = null;
+//        int res = 0;
+//        try {
+//            conn = JDBCUtil.getConnetion();
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, user.getPassword());
+//            pstmt.setString(2, user.getAccountNum());
+//            res = pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println("数据库操作失败！");
+//            throw new RuntimeException(e);
+//        }
+//        return res;
+        //以下是通过通用方法实现
+        int res = CURDUtil.WriteOne(sql, user.getState(), user.getAccountNum());
         return res;
     }
 
@@ -127,38 +134,44 @@ public class AccountOperationMapperImpl implements AccountOperationMapper {
     @Override
     public int depositAndWithrawMoney(CardInfoEntity user) {
         String sql = "update card_info set bal = bal + ? where account_num = ? and state = 1";
-        PreparedStatement pstmt = null;
-        int res = 0;
-        try {
-            conn = JDBCUtil.getConnetion();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, user.getBal());
-            pstmt.setString(2, user.getAccountNum());
-            res = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("数据库操作失败！");
-            throw new RuntimeException(e);
-        }
+//        PreparedStatement pstmt = null;
+//        int res = 0;
+//        try {
+//            conn = JDBCUtil.getConnetion();
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setDouble(1, user.getBal());
+//            pstmt.setString(2, user.getAccountNum());
+//            res = pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            System.out.println("数据库操作失败！");
+//            throw new RuntimeException(e);
+//        }
+//        return res;
+        //以下是通过通用方法实现
+        int res = CURDUtil.WriteOne(sql,user.getBal(),user.getAccountNum());
         return res;
     }
 
     @Override
-    public double checkMoney(CardInfoEntity user) {
-        String sql = "select bal from card_info where account_num = ? and state = 1";
-        PreparedStatement pstmt = null;
-        double bal = 0;
-        try {
-            conn = JDBCUtil.getConnetion();
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user.getAccountNum());
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                bal = rs.getDouble("bal");
-            }
-        } catch (SQLException e) {
-            System.out.println("数据库操作失败！");
-            throw new RuntimeException(e);
-        }
-        return bal;
+    public CardInfoEntity selctUser(CardInfoEntity user) {
+        String sql = "select * from card_info where account_num = ? and state = 1";
+//        PreparedStatement pstmt = null;
+//        double bal = 0;
+//        try {
+//            conn = JDBCUtil.getConnetion();
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, user.getAccountNum());
+//            ResultSet rs = pstmt.executeQuery();
+//            while (rs.next()) {
+//                bal = rs.getDouble("bal");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("数据库操作失败！");
+//            throw new RuntimeException(e);
+//        }
+//        return bal;
+        //以下是通过通用方法实现
+        CardInfoEntity res = CURDUtil.selectOne(CardInfoEntity.class, sql, user.getAccountNum());
+        return res;
     }
 }

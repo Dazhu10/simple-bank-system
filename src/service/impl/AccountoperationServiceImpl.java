@@ -28,8 +28,13 @@ public class AccountoperationServiceImpl implements AccountoperationService {
     }
 
     @Override
-    public double checkMoney(CardInfoEntity user) {
-        return accountOperationMapper.checkMoney(user);
+    public Double checkMoney(CardInfoEntity user) {
+        CardInfoEntity v = accountOperationMapper.selctUser(user);
+        if(null == v) {
+            System.out.println("操作失败，请检查账号是否被挂失！");
+            return null;
+        }
+        return v.getBal();
     }
 
     @Override

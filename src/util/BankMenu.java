@@ -31,7 +31,7 @@ public class BankMenu {
             }
             String password = null;
             boolean islogin = false;
-            double balance, operBal;
+            Double balance, operBal;
             int rows;
             //1685515870916
             switch (choice) {
@@ -126,6 +126,15 @@ public class BankMenu {
                     System.out.println("您选择了修改密码操作");
                     System.out.println("请输入您的卡号：");
                     user.setAccountNum(sc.nextLine());
+                    System.out.println("请输入您的密码：");
+                    password = MD5EncryptionUtil.encryptMD5(sc.nextLine());
+                    user.setPassword(password);
+                    islogin = accountoperationService.login(user);
+                    if(!islogin) {
+                        System.out.println("密码修改失败，返回主菜单请重新操作，或联系管理员");
+                        break;
+                    }
+                    System.out.println("登录成功！");
                     System.out.println("请输入新密码：");
                     user.setPassword(MD5EncryptionUtil.encryptMD5(sc.nextLine()));
                     accountoperationService.updatePassword(user);
@@ -149,6 +158,9 @@ public class BankMenu {
                     operBal = Double.parseDouble(sc.nextLine());
                     user.setBal(operBal);
                     balance = accountoperationService.checkMoney(user);
+                    if(null == balance){
+                        break;
+                    }
                     rows = accountoperationService.depositAndWithrawMoney(user);
                     if(rows == 1){
                         System.out.println("存款成功！余额为："+(balance+operBal));
@@ -171,6 +183,9 @@ public class BankMenu {
                     }
                     System.out.println("登录成功！");
                     balance = accountoperationService.checkMoney(user);
+                    if(null == balance){
+                        break;
+                    }
                     System.out.println("请输入取款金额：");
                     operBal = -Double.parseDouble(sc.nextLine());
                     if(-operBal > balance) {

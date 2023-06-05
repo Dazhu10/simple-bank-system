@@ -11,7 +11,7 @@ public interface AccountoperationService {
 
     int updatePassword(CardInfoEntity user);
 
-    double checkMoney(CardInfoEntity user);
+    Double checkMoney(CardInfoEntity user);
 
     boolean login(CardInfoEntity user);
     boolean logout(CardInfoEntity user);

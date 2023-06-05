@@ -15,5 +15,5 @@ public interface AccountOperationMapper {
 
     int depositAndWithrawMoney(CardInfoEntity user);
 
-    double checkMoney(CardInfoEntity user);
+    CardInfoEntity selctUser(CardInfoEntity user);
 }
