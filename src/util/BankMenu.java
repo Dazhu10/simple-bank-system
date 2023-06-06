@@ -8,6 +8,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Scanner;
 public class BankMenu {
+    /**
+     * 控制台交互
+     */
     public static void manu() {
         AccountoperationService accountoperationService = new AccountoperationServiceImpl();
         CardInfoEntity user = new CardInfoEntity();
@@ -45,8 +48,18 @@ public class BankMenu {
                     user.setBal(0);
                     user.setState("1");
                     user.setMakeUserName(sc.nextLine());
-                    user.setCertNo(sc.nextLine());
-                    user.setMobileNo(sc.nextLine());
+                    String certNo = sc.nextLine();
+                    if(!CheckUtil.validateIDNumber(certNo)) {
+                        System.out.println("身份证号码验证不合法，请重新操作");
+                        break;
+                    }
+                    user.setCertNo(certNo);
+                    String mobileNo = sc.nextLine();
+//                    if(!CheckUtil.validatePhoneNumber(mobileNo)) {
+//                        System.out.println("手机号码验证不合法，请重新操作");
+//                        break;
+//                    }
+                    user.setMobileNo(mobileNo);
                     user.setOpenDt(Date.valueOf(LocalDate.now()));
                     rows = accountoperationService.openAnCount(user);
                     if(rows == 1){

@@ -5,7 +5,14 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
+/**
+ * 获取数据库连接
+ */
 public class GeneralJDBCComponent {
+        /**
+         *  获取数据库连接
+         * @return 数据库连接
+         */
         public static Connection getConnection() {
             Connection connection = null;
             try {
@@ -24,6 +31,12 @@ public class GeneralJDBCComponent {
             return connection;
         }
 
+    /**
+     *  关闭连接
+     * @param conn 数据库连接
+     * @param statement 数据库Statement
+     * @param rs 结果集
+     */
         public static void closeResource(Connection conn, Statement statement, ResultSet rs) {
             try {
                 if (rs != null) {
@@ -47,6 +60,12 @@ public class GeneralJDBCComponent {
                 e.printStackTrace();
             }
         }
+
+    /**
+     * 读取jdbc配置文件
+     * @param filePath 配置文件名称路径
+     * @return
+     */
     public static Properties readJdbcProperties(String filePath) {
         Properties properties = new Properties();
         FileInputStream fis = null;
@@ -69,6 +88,11 @@ public class GeneralJDBCComponent {
 
         return properties;
     }
+
+    /**
+     * 获取项目文件夹地址
+     * @return
+     */
     public static String getProjectDirectory() {
         String currentDir = System.getProperty("user.dir");
         return currentDir;

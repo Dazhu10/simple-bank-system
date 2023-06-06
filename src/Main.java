@@ -1,6 +1,4 @@
 import controller.AccountOperationController;
-import util.CURDUtil;
-import util.GeneralJDBCComponent;
 
 import java.io.IOException;
 
